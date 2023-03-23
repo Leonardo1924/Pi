@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 int max(int x, int y)
 {
@@ -8,6 +9,13 @@ int max(int x, int y)
         return x;
     else
         return y;
+}
+
+void swapW(char *x, char *y)
+{
+    int temp = *x;
+    *x = *y;
+    *y = temp;
 }
 
 int one()
@@ -162,28 +170,90 @@ char *ten(char s1[], char s2[])
     return ret;
 }
 
-void eleven(char s[])
-{
-    int i, j, k = 0, count = 0;
-    for (int i = 0; s[i] != '\0'; i++)
-    {
-        count++;
+void eleven(char s[]){
+    int i , j = 0;
+    for(i = 0; s[i] != '\0'; i++){
     }
 
-    char s2[count];
-    for (int j = count-1; j >= 0; j--)
-    {
-        s2[k] = s[j];
-        k++;
+    for(j = 0; j < i; j++, i--){
+        swapW(&s[j], &s[i-1]);
     }
-    s2[k] = '\0';
 }
+
+int isVowel(char c){
+    return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U';
+}
+
+
+void twelve(char s[]){
+    int i, j = 0;
+    for(i = 0; s[i] != '\0'; i++){
+        if(isVowel(s[i])){
+            for(j = i; s[j] != '\0'; j++){
+                s[j] = s[j+1];
+            }
+            i--;
+        }
+    }
+}
+
+void thirteen(char t[], int n){
+    int size = strlen(t);
+    int i = 0;
+    int counter = 0;
+
+    for(i = 0; i < size ; i++){
+        if(t[i] == '\0') break;
+        if(t[i] == ' ')
+        {
+            counter = 0;
+        }
+        else if(counter >= n)
+        {
+            int j;
+            for(j = i; j < size; j++)
+            {
+                if(j == size - 1)
+                    t[j] = '\0';
+                else
+                    t[j] = t[j+1];
+            }
+            --i;
+        }
+        else{
+            ++counter;
+        }
+    }
+}
+
+char fourteen(char s[]){
+    if (*s == '\0') return '\0';
+    int morefreq = 0;
+    int count = 1;
+    char t = '\0';
+    for (int i = 0; s[i] != '\0'; i++){
+        if(s[i] == s[i+1]){
+            count++;
+        }
+        else{
+          if(count > morefreq){
+            morefreq = count;
+            t = s[i];
+          }
+          count = 1;
+        }
+    }
+    return t;
+}
+
+
+
+
+
 
 int main()
 {
-    char x[6] = "MACACO";
-    char y[6] = "";
-    eleven(x);
-
+    char str[10] = "aaabbbbccc";
+    printf("%c\n",fourteen(str));
     return 0;
 }
