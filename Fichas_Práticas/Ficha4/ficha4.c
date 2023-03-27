@@ -151,6 +151,13 @@ int main(int argc, char *argv[]){
             printf("%d ", r[i]);
         }
         printf("\n");
-    }    
+    }
+    char str9[] = "partition";
+    if(strcmp(argv[1], str9) == 0){
+        int v[10] = {1,2,3,4,5,6,7,8,9,10};
+        int x = 5;
+        int res = partition(v, 10, x);
+        printf("%d\n", res);
+    }
     return 0;
 }
