@@ -99,6 +99,20 @@ void merge (int a[], int na, int b[], int nb, int r[]){
     }
 }
 
+int partition(int v[], int N, int x){
+    int i = 0, j = N-1;
+    while(i < j){
+        while(v[i] < x) i++;
+        while(v[j] >= x) j--;
+        if(i < j){
+            int temp = v[i];
+            v[i] = v[j];
+            v[j] = temp;
+        }
+    }
+    return i;
+} 
+
 int main(int argc, char *argv[]){
     char str1[] = "contaVogais";
     if(strcmp(argv[1], str1) == 0){
@@ -137,6 +151,13 @@ int main(int argc, char *argv[]){
             printf("%d ", r[i]);
         }
         printf("\n");
-    }    
+    }
+    char str9[] = "partition";
+    if(strcmp(argv[1], str9) == 0){
+        int v[10] = {1,2,3,4,5,6,7,8,9,10};
+        int x = 5;
+        int res = partition(v, 10, x);
+        printf("%d\n", res);
+    }
     return 0;
 }
