@@ -226,27 +226,125 @@ void thirteen(char t[], int n){
     }
 }
 
-char fourteen(char s[]){
-    if (*s == '\0') return '\0';
-    int morefreq = 0;
-    int count = 1;
-    char t = '\0';
-    for (int i = 0; s[i] != '\0'; i++){
-        if(s[i] == s[i+1]){
-            count++;
-        }
-        else{
-          if(count > morefreq){
-            morefreq = count;
-            t = s[i];
-          }
-          count = 1;
+int freqC(char ch, char s[]) {
+    int i, freq = 0;
+    for(i = 0; s[i]; i++) {
+        if(s[i] == ch) freq++;
+    }
+    return freq;
+}
+
+char fourteen (char s[]) {
+    char maisFreq = 0;
+    int i, freqMax = 0, freq;
+    for(i = 0; s[i]; i++) {
+        if((freq = freqC(s[i],s)) > freqMax) {
+            freqMax = freq;
+            maisFreq = s[i];
         }
     }
-    return t;
+    return maisFreq;
+}
+
+int iguaisConsecutivos (char s[]){
+    int i, max = 0 , count = 1;
+    for(i = 0; s[i]; i++){
+        if(s[i] == s[i+1]) count++;
+        else{
+            if (count > max) max = count;
+            count = 1;
+        }
+    }
+    return max;
+}
+
+int not_in_prev(char s[], int n) {
+    int i;
+    for(i = 0; i < n; i++) {
+        if(s[i] == s[n]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int difConsecutivos(char s[]) {
+    int consec, difs = 0;
+    size_t i, j;
+    for(i = 0; s[i]; i++) {
+        for(j = 0, consec = 0; s[i+j] && not_in_prev(s+i,j); j++, consec++);
+        if (consec > difs) difs = consec;
+    }
+    return difs;
+}
+
+int maiorPrefixo(char s1[], char s2[]){
+    int i;
+    for(i = 0; s1[i] == s2[i] && s1[i]; i++);
+    return i;
+}
+
+int maiorSufixo(char s1[], char s2[]){
+    int size1,size2, max = 0;
+    for(size1 = 0; s1[size1]!= '\0'; size1++);
+    for(size2 = 0; s2[size2]!= '\0'; size2++);
+    while(s1[--size1] == s2[--size2]) max++;
+    return max;
+}
+
+int sufPref(char s1[], char s2[]){
+    int n1,n2 = 0;
+    for(int n1 = 0; s1[n1]; n1++){
+        if(s1[n1] == s2[n2]) n2++;
+        else n2 = 0; 
+    }
+    return n2;
 }
 
 
+int contaPal(char s[]){
+    int i, inWord = 0, count = 0;
+    for(i = 0; s[i]; i++){
+        if (s[i] == ' '|| s[i] == '\n' || s[i] == '\t'){
+            if(inWord) count++;
+            inWord = 0;
+        }
+        else inWord = 1;
+    }
+    return count + inWord;
+}
+
+int isVowel(char c){
+    return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U');
+}
+
+int contaVogais(char s[]){
+    int i , count = 0;
+    for(i = 0; s[i]; i++){
+        if(isVowel(s[i])) count++;
+    }
+    return count;
+}
+
+int contida (char a[], char b[]) {
+    int i, j;
+    int acc = 1, contemLetra;
+    for(i = 0; a[i] && acc; i++) {
+        contemLetra = 0;
+        for(j = 0; b[j] && !contemLetra; j++)
+            if (b[j] == a[i])
+                contemLetra = 1;
+        acc = contemLetra;
+    }
+    return acc;
+}
+
+int palindrome (char s[]) {
+    int i, N = 0;
+    for(i = 0; s[i]; i++) N++;
+    for(i = 0; i < N && s[i] == s[N - i - 1]; i++);
+    return i == N;
+}
 
 
 
